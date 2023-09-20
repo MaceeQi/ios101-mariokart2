@@ -99,7 +99,35 @@ class ViewController: UIViewController,
   
   // Exercise 3: Decipher the mystery box and apply the correct effect on mario
   private func decipher(mysteryBox: MysteryBox) {
+    // Attempt to cast "mysteryEffect" to a Dictionary [String: String]
+    // Assign the result to the variable "effectDictionary"
+    guard let effectDictionary = mysteryBox.mysteryEffect as? [String: String] else {
+      // If the cast fails, then throw an error and early return
+      assertionFailure("Expecting value of type dictionary")
+      return
+    }
     
+    // Make sure the effectDictionary["effect"] has a non-nil value
+    // and assign the result to the effect variable
+    guard let effect = effectDictionary["effect"] else {
+      // If the value is nil, throw an error and return early
+      assertionFailure("Expecting value of type String")
+      return
+    }
+    
+    // Cast didn't fail and effect has non-nil value: apply the correct effect to Mario
+    if effect == "translate" {
+      translate(kart: kartView1, by: view.bounds.width)
+    }
+    else if effect == "rotate" {
+      rotate(kart: kartView1)
+    }
+    else if effect == "scale" {
+      scale(kart: kartView1)
+    }
+    else {
+      assertionFailure("Unexpected effect")
+    }
   }
   
   private func translate(kart: UIView?,
